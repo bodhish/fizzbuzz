@@ -35,30 +35,30 @@ function handleClick(setScore, action) {
               }));
 }
 
+function button(text, action, setScore) {
+  return React.createElement("div", {
+              className: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mt-2",
+              onClick: (function (param) {
+                  return handleClick(setScore, action);
+                })
+            }, text);
+}
+
 function FizzBuzz(Props) {
   var match = React.useState((function () {
           return 1;
         }));
   var setScore = match[1];
   var score = match[0];
-  return React.createElement("div", undefined, React.createElement("h1", undefined, "FizzBuzz"), React.createElement("h1", undefined, String(score)), React.createElement("div", {
-                  onClick: (function (param) {
-                      return handleClick(setScore, /* Number */3);
-                    })
-                }, String(score)), React.createElement("div", {
-                  className: "bg-blue-500",
-                  onClick: (function (param) {
-                      return handleClick(setScore, /* Fizz */0);
-                    })
-                }, "Fizz"), React.createElement("div", {
-                  onClick: (function (param) {
-                      return handleClick(setScore, /* Buzz */1);
-                    })
-                }, "Buzz"), React.createElement("div", {
-                  onClick: (function (param) {
-                      return handleClick(setScore, /* FizzBuzz */2);
-                    })
-                }, "FizzBuzz"));
+  return React.createElement("div", {
+              className: "container mx-auto px-2"
+            }, React.createElement("div", {
+                  className: "max-w-md mx-auto"
+                }, React.createElement("div", {
+                      className: "font-bold text-6xl text-center pt-10"
+                    }, "FizzBuzz"), React.createElement("div", {
+                      className: "font-semibold text-center text-6xl text-green-500"
+                    }, String(score)), button(String(score), /* Number */3, setScore), button("Fizz", /* Fizz */0, setScore), button("Buzz", /* Buzz */1, setScore), button("FizzBuzz", /* FizzBuzz */2, setScore)));
 }
 
 var make = FizzBuzz;
@@ -66,5 +66,6 @@ var make = FizzBuzz;
 exports.str = str;
 exports.fizzbuzz = fizzbuzz;
 exports.handleClick = handleClick;
+exports.button = button;
 exports.make = make;
 /* react Not a pure module */
