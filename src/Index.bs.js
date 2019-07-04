@@ -5,8 +5,6 @@ var React = require("react");
 var ReactDOMRe = require("reason-react/src/ReactDOMRe.js");
 var FizzBuzz$ReactHooksTemplate = require("./FizzBuzz.bs.js");
 
-ReactDOMRe.renderToElementWithId(React.createElement(FizzBuzz$ReactHooksTemplate.make, {
-          greeting: "Hello!"
-        }), "app");
+ReactDOMRe.renderToElementWithId(React.createElement(FizzBuzz$ReactHooksTemplate.make, { }), "index");
 
 /*  Not a pure module */

@@ -1,1 +1,1 @@
-ReactDOMRe.renderToElementWithId(<FizzBuzz greeting="Hello!" />, "app");
+ReactDOMRe.renderToElementWithId(<FizzBuzz />, "index");

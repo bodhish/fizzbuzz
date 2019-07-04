@@ -8,6 +8,24 @@ function str(prim) {
 }
 
 function FizzBuzz(Props) {
+  var fizzbuzz = function (i) {
+    var match = i % 3;
+    var match$1 = i % 5;
+    if (match !== 0) {
+      if (match$1 !== 0) {
+        return String(i);
+      } else {
+        return "Buzz";
+      }
+    } else if (match$1 !== 0) {
+      return "Fizz";
+    } else {
+      return "FizzBuzz";
+    }
+  };
+  for(var i = 1; i <= 100; ++i){
+    console.log(fizzbuzz(i));
+  }
   return React.createElement("div", undefined, React.createElement("h1", undefined, "FizzBuzz"));
 }
 
