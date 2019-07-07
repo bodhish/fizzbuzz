@@ -25,24 +25,18 @@ function fizzbuzz(i) {
   }
 }
 
-function handleClick(setScore, action) {
-  return Curry._1(setScore, (function (score) {
-                var match = action === fizzbuzz(score);
-                if (match) {
-                  return score + 1 | 0;
-                } else {
-                  return 1;
-                }
+function handleClick(score, setScore, action, setCountDown) {
+  var correctAnswer = action === fizzbuzz(score);
+  Curry._1(setScore, (function (score) {
+          if (correctAnswer) {
+            return score + 1 | 0;
+          } else {
+            return 1;
+          }
+        }));
+  return Curry._1(setCountDown, (function (param) {
+                return 10;
               }));
-}
-
-function button(text, action, setScore) {
-  return React.createElement("div", {
-              className: "bg-green-500 text-white font-bold py-2 px-4 shadow-lg rounded mt-2 py-2 px-4 text-lg text-center ",
-              onClick: (function (param) {
-                  return handleClick(setScore, action);
-                })
-            }, text);
 }
 
 function buttonText(action, number) {
@@ -59,12 +53,62 @@ function buttonText(action, number) {
   }
 }
 
+function button(score, action, setScore, setCountDown) {
+  var text = buttonText(action, score);
+  return React.createElement("div", {
+              key: text,
+              className: "bg-green-500 text-white font-bold py-2 px-4 shadow-lg rounded mt-2 py-2 px-4 text-lg text-center ",
+              onClick: (function (param) {
+                  return handleClick(score, setScore, action, setCountDown);
+                })
+            }, text);
+}
+
+function clearTimer(timer) {
+  clearTimeout(timer);
+  return /* () */0;
+}
+
+function setTimer(countDown, setCountDown, setScore) {
+  var decriment = function (param) {
+    var match = countDown === 0;
+    if (match) {
+      return Curry._1(setScore, (function (param) {
+                    return 1;
+                  }));
+    } else {
+      return Curry._1(setCountDown, (function (countDown) {
+                    return countDown - 1 | 0;
+                  }));
+    }
+  };
+  return setTimeout(decriment, 1000);
+}
+
 function FizzBuzz(Props) {
   var match = React.useState((function () {
           return 1;
         }));
   var setScore = match[1];
   var score = match[0];
+  var match$1 = React.useState((function () {
+          return 10;
+        }));
+  var setCountDown = match$1[1];
+  var countDown = match$1[0];
+  var initialRender = React.useRef(true);
+  var timer = setTimer(countDown, setCountDown, setScore);
+  React.useEffect((function () {
+          return undefined;
+        }), /* array */[countDown]);
+  React.useEffect((function () {
+          if (initialRender.current) {
+            initialRender.current = false;
+          } else {
+            clearTimeout(timer);
+          }
+          return undefined;
+        }), /* array */[score]);
   return React.createElement("div", {
               className: "container mx-auto px-2"
             }, React.createElement("div", {
@@ -73,8 +117,10 @@ function FizzBuzz(Props) {
                       className: "font-bold text-6xl text-center pt-10"
                     }, "FizzBuzz"), React.createElement("div", {
                       className: "font-semibold text-center text-6xl text-green-500"
+                    }, String(countDown)), React.createElement("div", {
+                      className: "font-semibold text-center text-6xl text-green-500"
                     }, String(score)), $$Array.map((function (action) {
-                        return button(buttonText(action, score), action, setScore);
+                        return button(score, action, setScore, setCountDown);
                       }), /* array */[
                       /* Number */3,
                       /* Fizz */0,
@@ -88,7 +134,9 @@ var make = FizzBuzz;
 exports.str = str;
 exports.fizzbuzz = fizzbuzz;
 exports.handleClick = handleClick;
-exports.button = button;
 exports.buttonText = buttonText;
+exports.button = button;
+exports.clearTimer = clearTimer;
+exports.setTimer = setTimer;
 exports.make = make;
 /* react Not a pure module */
